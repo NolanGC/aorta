@@ -1,11 +1,20 @@
 const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-const iPhoneX = puppeteer.pptr.devices['iPhone X'];
 var TempMail = require('node-temp-mail');
 var GhostCursor = require('ghost-cursor')
-//const PluginProxy = require('puppeteer-extra-plugin-proxy')
+const PluginProxy = require('puppeteer-extra-plugin-proxy')
+const fs = require('fs')
+
+//pip install -U git+https://github.com/bluet/proxybroker2.git
+//proxybroker find --types HTTPS --countries US --limit 1 --outfile ./proxies.txt
 
 puppeteer.use(StealthPlugin())
+/*var proxy = fs.readFileSync('proxies.txt', 'utf8').split('] ')[1].split('>')[0].split(':')
+console.log(proxy)
+puppeteer.use(PluginProxy({
+  address: proxy[0],
+  port: proxy[1]
+}))*/
 
 const args = [
     '--no-sandbox',
@@ -52,22 +61,22 @@ puppeteer.launch({ headless: false, args: args}).then(async browser => {
         await delay(1000)
         await typeText(page, "[name='name']", makeid(8))
         await delay(1000)
-        await click(page, "#layers > div:nth-child(2) > div > div > div > div > div > div.css-1dbjc4n.r-1awozwy.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-1867qdf.r-1wbh5a2.r-kwpbio.r-rsyp9y.r-1pjcn9w.r-1279nm1.r-htvplk.r-1udh08x > div > div > div.css-1dbjc4n.r-kemksi.r-6koalj.r-16y2uox.r-1wbh5a2 > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2.r-1jgb5lz.r-1ye8kvj.r-13qz1uu > div > div > div.css-18t94o4.css-901oao.r-k200y.r-1n1174f.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-19h5ruw.r-bcqeeo.r-qvutc0 > span", cursor);
+        await click(page, ".css-18t94o4 .css-901oao", cursor);
         await typeText(page, "[name='email']", address.getAddress()['address']);
         await click(page, "#Month", cursor);
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await delay(Math.floor(Math.random() * 1000) + 800)
         await page.select("[id='Month']", '3');
         await click(page, "#Day", cursor);
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await delay(Math.floor(Math.random() * 1000) + 800)
         await page.select("[id='Day']", '22');
         await click(page, "#Year", cursor);
         await delay(Math.floor(Math.random() * 1500) + 1000)
         await page.select("[id='Year']", '1984');
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await delay(Math.floor(Math.random() * 1000) + 800)
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao", cursor);
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await delay(Math.floor(Math.random() * 1000) + 800)
         await click(page, "[type='checkbox']", cursor);
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await delay(Math.floor(Math.random() * 1000) + 800)
         await page.click(".r-jwli3a", cursor);
         await page.click(".r-jwli3a", cursor);
         await delay(Math.floor(Math.random() * 5000) + 4000)
