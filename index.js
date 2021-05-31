@@ -1,20 +1,10 @@
 const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 var TempMail = require('node-temp-mail');
-var GhostCursor = require('ghost-cursor')
 const PluginProxy = require('puppeteer-extra-plugin-proxy')
 const fs = require('fs')
 
-//pip install -U git+https://github.com/bluet/proxybroker2.git
-//proxybroker find --types HTTPS --countries US --limit 1 --outfile ./proxies.txt
-
 puppeteer.use(StealthPlugin())
-/*var proxy = fs.readFileSync('proxies.txt', 'utf8').split('] ')[1].split('>')[0].split(':')
-console.log(proxy)
-puppeteer.use(PluginProxy({
-  address: proxy[0],
-  port: proxy[1]
-}))*/
 
 const args = [
     '--no-sandbox',
@@ -25,16 +15,14 @@ const args = [
     '--lang=en-US,en;q=0.9',
 ]
 
-async function click(page, selector, cursor){
+async function click(page, selector){
     await page.waitForSelector(selector);
-    await cursor.move(selector)
-    await delay(Math.floor(Math.random() * 100) + 50)
-    await cursor.click(selector);
+    await page.click(selector);
 }
 
 async function typeText(page, selector, text){
     await page.waitForSelector(selector);
-    await page.type(selector, text, {delay: Math.floor(Math.random() * 120) + 100});
+    await page.type(selector, text, {delay: Math.floor(Math.random() * 30) + 25});
 }
 function delay(time) {
     return new Promise(function(resolve) {
@@ -51,34 +39,26 @@ function makeid(length) {
     return result;
  }
 
-puppeteer.launch({ headless: false, args: args}).then(async browser => {
+puppeteer.launch({ headless: true, args: args}).then(async browser => {
     try {
         const page = await browser.newPage();
-        const cursor = GhostCursor.createCursor(page)
+        await page.setDefaultNavigationTimeout(0); 
         var address = new TempMail(makeid(8));
         console.log(address.getAddress()['address'])
         await page.goto('https://twitter.com/signup');
-        await delay(1000)
         await typeText(page, "[name='name']", makeid(8))
-        await delay(1000)
-        await click(page, ".css-18t94o4 .css-901oao", cursor);
+        await click(page, ".css-18t94o4 .css-901oao");
         await typeText(page, "[name='email']", address.getAddress()['address']);
-        await click(page, "#Month", cursor);
-        await delay(Math.floor(Math.random() * 1000) + 800)
+        await click(page, "#Month");
         await page.select("[id='Month']", '3');
-        await click(page, "#Day", cursor);
-        await delay(Math.floor(Math.random() * 1000) + 800)
+        await click(page, "#Day");
         await page.select("[id='Day']", '22');
-        await click(page, "#Year", cursor);
-        await delay(Math.floor(Math.random() * 1500) + 1000)
+        await click(page, "#Year");
         await page.select("[id='Year']", '1984');
-        await delay(Math.floor(Math.random() * 1000) + 800)
-        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao", cursor);
-        await delay(Math.floor(Math.random() * 1000) + 800)
-        await click(page, "[type='checkbox']", cursor);
-        await delay(Math.floor(Math.random() * 1000) + 800)
-        await page.click(".r-jwli3a", cursor);
-        await page.click(".r-jwli3a", cursor);
+        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        await click(page, "[type='checkbox']");
+        await page.click(".r-jwli3a");
+        await page.click(".r-jwli3a");
         await delay(Math.floor(Math.random() * 5000) + 4000)
         const fetchEmails = () => new Promise((resolve, reject) => {
             address.fetchEmails(function(err, body){
@@ -90,18 +70,16 @@ puppeteer.launch({ headless: false, args: args}).then(async browser => {
         var vnum = await fetchEmails()
         await typeText(page, "[autocapitalize='sentences']", vnum);
         await delay(1000)
-        await click(page, ".r-obd0qt .css-bfa6kz .css-901oao", cursor);
-        await click(page, "[autocapitalize='sentences']", cursor);
+        await click(page, ".r-obd0qt .css-bfa6kz .css-901oao");
+        await click(page, "[autocapitalize='sentences']");
         await typeText(page, "[autocapitalize='sentences']", makeid(10));
-        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao", cursor);
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        await click(page, ".r-zv2cs0 .css-bfa6kz .css-901oao");
-        /*await page.goto('https://www.tiktok.com/404?fromUrl=/signin');
-        await page.goto('https://www.tiktok.com/404?fromUrl=/signup');
+        //await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        //await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        //await click(page, ".r-zv2cs0 .css-bfa6kz .css-901oao");
+        console.log("created twitter")
         await page.goto('https://www.tiktok.com/signup');
-
         await click(page, ".show-more-2f_sw");
         await click(page, ".social-container-NE2xk > :nth-child(4) .channel-item-wrapper-2gBWB");
         await click(page, "#allow");
@@ -113,7 +91,7 @@ puppeteer.launch({ headless: false, args: args}).then(async browser => {
         await click(page, ".list-container-2f5zg > :nth-child(37)");
         await click(page, ".login-button-31D24");
         await click(page, ".suggest-wrapper-Cf0Us > :nth-child(2)");
-        await click(page, "[type='submit']");*/
+        await click(page, "[type='submit']");
       } finally {
         if (browser) {
           //await browser.close();
