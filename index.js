@@ -39,7 +39,7 @@ function makeid(length) {
     return result;
  }
 
-puppeteer.launch({ headless: true, args: args}).then(async browser => {
+puppeteer.launch({ headless: false, args: args}).then(async browser => {
     try {
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0); 
@@ -55,8 +55,11 @@ puppeteer.launch({ headless: true, args: args}).then(async browser => {
         await page.select("[id='Day']", '22');
         await click(page, "#Year");
         await page.select("[id='Year']", '1984');
+        await delay(1000)
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        await click(page, "[type='checkbox']");
+        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        await delay(1000)
+        //await click(page, "[type='checkbox']");
         await page.click(".r-jwli3a");
         await page.click(".r-jwli3a");
         await delay(Math.floor(Math.random() * 5000) + 4000)
@@ -73,11 +76,12 @@ puppeteer.launch({ headless: true, args: args}).then(async browser => {
         await click(page, ".r-obd0qt .css-bfa6kz .css-901oao");
         await click(page, "[autocapitalize='sentences']");
         await typeText(page, "[autocapitalize='sentences']", makeid(10));
+        await delay(1000)
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        //await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        //await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
-        //await click(page, ".r-zv2cs0 .css-bfa6kz .css-901oao");
+        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
+        await delay(1000)
         console.log("created twitter")
         await page.goto('https://www.tiktok.com/signup');
         await click(page, ".show-more-2f_sw");
