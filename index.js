@@ -103,10 +103,11 @@ puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(asyn
         console.log("went to tiktok")
         await page.goto(url);
         await page.screenshot({
-          fullPage: true,
+          fullPage: false,
           path:"yo.png"
         });
         await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await browser.close();
       } finally {
