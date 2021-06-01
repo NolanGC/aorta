@@ -86,7 +86,10 @@ puppeteer.launch({ headless: false, args: args}).then(async browser => {
         await page.goto('https://www.tiktok.com/signup');
         await click(page, ".show-more-2f_sw");
         await click(page, ".social-container-NE2xk > :nth-child(4) .channel-item-wrapper-2gBWB");
-        await click(page, "#allow");
+        await delay(1000)
+        const newPagePromise = new Promise(x => page.once('popup', x));
+        const newPage = await newPagePromise; 
+        await click(newPage, "#allow");
         await click(page, ".date-selector-pc-oyWlO > div:nth-of-type(1) .select-container-2Ubyt");
         await click(page, ".list-container-2f5zg > li:nth-of-type(1) span");
         await click(page, ".date-selector-pc-oyWlO > div:nth-of-type(2) .select-container-2Ubyt");
