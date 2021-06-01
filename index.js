@@ -3,7 +3,7 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 var TempMail = require('node-temp-mail');
 const PluginProxy = require('puppeteer-extra-plugin-proxy')
 const fs = require('fs')
-
+const url = "https://www.tiktok.com/@nolanclement2/video/6968689871816871173?lang=en&is_copy_url=1&is_from_webapp=v1"
 puppeteer.use(StealthPlugin())
 
 const args = [
@@ -99,6 +99,10 @@ puppeteer.launch({ headless: false, args: args}).then(async browser => {
         await click(page, ".login-button-31D24");
         await click(page, ".suggest-wrapper-Cf0Us > :nth-child(2)");
         await click(page, "[type='submit']");
+        await page.goto(url);
+        await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        await browser.close();
       } finally {
         if (browser) {
           //await browser.close();
