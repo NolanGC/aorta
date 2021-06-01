@@ -39,7 +39,7 @@ function makeid(length) {
     return result;
  }
 
-puppeteer.launch({ headless: false, args: args}).then(async browser => {
+puppeteer.launch({ headless: true, args: args}).then(async browser => {
     try {
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0); 
