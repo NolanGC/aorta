@@ -39,9 +39,9 @@ function makeid(length) {
     return result;
  }
 
-puppeteer.launch({ headless: true, args: args}).then(async browser => {
+puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(async browser => {
     try {
-        const page = await browser.newPage();
+        const [page] = await browser.pages();
         await page.setDefaultNavigationTimeout(0); 
         var address = new TempMail(makeid(8));
         console.log(address.getAddress()['address'])
@@ -89,6 +89,7 @@ puppeteer.launch({ headless: true, args: args}).then(async browser => {
         await delay(1000)
         const newPagePromise = new Promise(x => page.once('popup', x));
         const newPage = await newPagePromise; 
+        console.log("got popup")
         await click(newPage, "#allow");
         await click(page, ".date-selector-pc-oyWlO > div:nth-of-type(1) .select-container-2Ubyt");
         await click(page, ".list-container-2f5zg > li:nth-of-type(1) span");
@@ -99,6 +100,7 @@ puppeteer.launch({ headless: true, args: args}).then(async browser => {
         await click(page, ".login-button-31D24");
         await click(page, ".suggest-wrapper-Cf0Us > :nth-child(2)");
         await click(page, "[type='submit']");
+        console.log("went to tiktok")
         await page.goto(url);
         await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
