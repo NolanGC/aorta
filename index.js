@@ -102,13 +102,17 @@ puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(asyn
         await click(page, "[type='submit']");
         console.log("went to tiktok")
         await page.goto(url);
-        await page.screenshot({
-          fullPage: false,
-          path:"yo.png"
-        });
         await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        console.log("selector found, we click")
+        await page.hover('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        await delay(1000)
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
+        await page.screenshot({
+          path: "./screenshot.jpg",
+          type: "jpeg",
+          fullPage: false
+        });
         await browser.close();
       } finally {
         if (browser) {
