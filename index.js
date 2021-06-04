@@ -39,7 +39,7 @@ function makeid(length) {
     return result;
  }
 
-puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(async browser => {
+puppeteer.launch({ headless: false, args: args, defaultViewport: null}).then(async browser => {
     try {
         const [page] = await browser.pages();
         await page.setDefaultNavigationTimeout(0); 
@@ -49,12 +49,12 @@ puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(asyn
         await typeText(page, "[name='name']", makeid(8))
         await click(page, ".css-18t94o4 .css-901oao");
         await typeText(page, "[name='email']", address.getAddress()['address']);
-        await click(page, "#Month");
-        await page.select("[id='Month']", '3');
-        await click(page, "#Day");
-        await page.select("[id='Day']", '22');
-        await click(page, "#Year");
-        await page.select("[id='Year']", '1984');
+        await click(page, "#SELECTOR_1");
+        await page.select("[id='SELECTOR_1']", '3');
+        await click(page, "#SELECTOR_2");
+        await page.select("[id='SELECTOR_2']", '22');
+        await click(page, "#SELECTOR_3");
+        await page.select("[id='SELECTOR_3']", '1984');
         await delay(1000)
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
@@ -102,18 +102,15 @@ puppeteer.launch({ headless: true, args: args, defaultViewport: null}).then(asyn
         await click(page, "[type='submit']");
         console.log("went to tiktok")
         await page.goto(url);
+        //await delay(3000)
+        //await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
         await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         console.log("selector found, we click")
+        await delay(500000)
         await page.hover('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await delay(1000)
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
-        await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
-        await page.screenshot({
-          path: "./screenshot.jpg",
-          type: "jpeg",
-          fullPage: false
-        });
-        await browser.close();
+        //await browser.close();
       } finally {
         if (browser) {
           //await browser.close();
