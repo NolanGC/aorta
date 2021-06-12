@@ -5,7 +5,7 @@ const PluginProxy = require('puppeteer-extra-plugin-proxy')
 const fs = require('fs')
 const url = "https://www.tiktok.com/@nolanclement2/video/6968689871816871173?lang=en&is_copy_url=1&is_from_webapp=v1"
 puppeteer.use(StealthPlugin())
-
+const iPhone = puppeteer.pptr.devices['iPhone X'];
 
 const args = [
     '--no-sandbox',
@@ -44,6 +44,7 @@ puppeteer.launch({ headless: false, args: args, defaultViewport: null}).then(asy
     try {
         const [page] = await browser.pages();
         await page.setDefaultNavigationTimeout(0); 
+        //await page.setViewport({height, width});
         var address = new TempMail(makeid(8));
         console.log(address.getAddress()['address'])
         await page.goto('https://twitter.com/signup');
@@ -84,6 +85,7 @@ puppeteer.launch({ headless: false, args: args, defaultViewport: null}).then(asy
         await click(page, ".r-136ojw6 .css-bfa6kz .css-901oao");
         await delay(1000)
         console.log("created twitter")
+        await page.emulate(iPhone)
         await page.goto('https://www.tiktok.com/signup');
         await click(page, ".show-more-2f_sw");
         await click(page, ".social-container-NE2xk > :nth-child(4) .channel-item-wrapper-2gBWB");
