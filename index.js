@@ -6,6 +6,7 @@ const fs = require('fs')
 const url = "https://www.tiktok.com/@nolanclement2/video/6968689871816871173?lang=en&is_copy_url=1&is_from_webapp=v1"
 puppeteer.use(StealthPlugin())
 
+
 const args = [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -106,7 +107,6 @@ puppeteer.launch({ headless: false, args: args, defaultViewport: null}).then(asy
         //await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
         await page.waitForSelector('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         console.log("selector found, we click")
-        await delay(500000)
         await page.hover('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
         await delay(1000)
         await page.click('.lazyload-wrapper:nth-child(1) > .jsx-747277952 > .jsx-747277952 > .jsx-747277952 > .jsx-1045706868 > .jsx-1045706868 > .jsx-1045706868 > svg > path')
